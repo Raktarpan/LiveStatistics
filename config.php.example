@@ -1,0 +1,15 @@
+<?php
+
+/**
+* MySQL Config
+* using, MeekroDB PHP-MySQL Library - https://meekro.com/quickstart.php
+*/
+
+require_once('meekrodb.2.3.class.php');
+
+DB=$host = '';      // db host
+DB::$user = '';     // db username
+DB::$password = ''; // db password
+DB::$dbName = '';   // database name
+
+?>
