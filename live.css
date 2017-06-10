@@ -1,0 +1,91 @@
+body
+{
+	padding: 0;
+	margin: 0;
+	background-color: #fff;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: large
+}
+header
+{
+	/*background: linear-gradient(black, gray);*/
+	background-color: #000;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	position: fixed;
+	width: 100%;
+	z-index: 1;
+	top: 0;
+}
+.header_image
+{
+	max-width: 15%;
+}
+#content
+{
+	margin-top: 7%;
+}
+#total
+{
+	font-size: 1000%;
+	text-align: center;
+	color: #f44242;
+	margin: -25px;
+}
+#stats
+{	
+	width: 100%;	
+	margin: auto;
+	text-align: center;
+}
+.stats
+{
+	float: left;
+	width: 40%;
+	height: 35%;
+	margin: 2% 4% 0 5%;
+	border: solid;
+}
+table.table_lines td
+{
+	border-style: solid;
+	border-color: #cacaca;
+	border-width: 0px 0px 1px 0px;
+}
+table.table_lines th
+{
+	border-style: solid; 
+	border-color: #cacaca;
+	border-width: 0px 0px 2px 0px;
+}
+td.underline
+{
+	border-style: solid;
+	border-color: #cacaca;
+	border-width: 0px 0px 2px 0px;
+}
+table
+{
+	font-size: 24px;
+	padding: 1%;
+	margin: auto;
+}
+td, th
+{
+	padding: 25px 50px 25px 50px;
+	text-align: center;
+	vertical-align: center;
+}
+#stat-gender
+{
+	width: 100%;
+	text-align: center;
+}
+img
+{
+	max-width: 15%
+}
+#stat-gender
+{
+	font-size: 300%
+}

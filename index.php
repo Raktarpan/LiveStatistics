@@ -27,12 +27,24 @@ $males = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = '".$Camp
 $females = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = '".$CampId."' AND Fit = '1' AND Gender = 'F'");
 
 // 5. Hall Distribution
-// DB::query("SELECT COUNT(*) FROM donor WHERE Id = '".$CampId."' GROUP BY ________");
+$hall_results = DB::query("SELECT Hostel, COUNT(*) as Count FROM donor WHERE CampId = '".$CampId."' GROUP BY Hostel ORDER BY Count DESC LIMIT 3");
+$HallTable = "<table class='table_lines'>\n<tr>\n<th>Rank</th><th>Hostel</th><th>Donations</th>\n</tr>\n";
+$Rank = 0;
+foreach ($hall_results as $row) {
+    $Rank++;
+    $HallTable .= "<tr>\n";
+    $HallTable .= "<td>". $Rank."</td>";
+    $HallTable .= "<td>". $row['Hostel']."</td>";
+    $HallTable .= "<td>". $row['Count']."</td>";
+    $HallTable .= "\n</tr>\n";
+}
+$HallTable .= "</table>";
 
 ?>
 <html>
 <head>
 <title>&bull; Raktarpan &bull; Blood Donation Camp &bull; Live Statistics &bull;</title>
+<link href="live.css" rel='stylesheet' type='text/css' />
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -67,20 +79,47 @@ $females = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = '".$Ca
     </script>
 </head>
 <body>
+    <header>
+      <center><img src="../rakt.png" class="header_image"></center>
+    </header>
+
     <div id="content">
-    <div id="total"> 
-        <? echo "Total successful donations <b>". $success_donate ."</b>!<br>" ?>
-        <small><? echo "&bull; <b>Male</b>: " . $males . " &bull; <b>Female</b>: " . $females . " &bull;"; ?></small>
-    </div>
-    <div id="stat-bldgrp">
-    
-    </div>
-    <div id="stat-year"> 
-    
-    </div>
-    <div id="stat-hall"> 
-    
-    </div>
+
+      <table>
+        <tr>
+          <td><img src="man.png"><span id="stat-gender"> <? echo $males;?></span></td>
+          <td width="40%"><center><!-- h2>Successful Donations</center></h2 -->
+              <div id="total"> 
+                <? echo $success_donate; ?>
+              </div><br>
+              <center style="font-size: 24px">
+                <!-- Total: --><b><? echo $success_donate+$failure_donate; ?></b>
+              </center></td>
+          <td><img src="woman.png"><span id="stat-gender"> <? echo $females;?></span></td>
+      </tr>
+    </table>
+
+      <!-- <div id="stat-gender">
+          <table>
+            <tr>
+              <td><img src="man.png">: <? echo $males;?></td>
+              <td><img src="woman.png">: <? echo $females;?></td>
+            </tr>
+          </table>
+          <small><? //echo "&bull; <b>Male</b>: " . $males . "<br> &bull; <b>Female</b>: " . $females; ?></small>
+        </div> -->
+
+      <div id="stats">
+
+        <div id="stat-bldgrp" class="stats"></div>
+
+        <!-- <div id="stat-year" class="stats"></div> -->
+
+        <div id="stat-hall" class="stats">
+            <? echo $HallTable; ?>
+        </div>
+
+      </div>
     </div>
 </body>
 </html>
