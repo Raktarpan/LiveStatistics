@@ -1,7 +1,9 @@
 <?php
 
-require_once('config.php');
-$CampId = "1";
+$CampDir = ".";
+
+require_once($CampDir . '/config.php');
+require_once($CampDir . '/settings.php');
 
 // Gather Camp Details
 DB::query("SELECT * FROM camp WHERE Id = '".$CampId."'");
@@ -11,9 +13,10 @@ DB::query("SELECT * FROM camp WHERE Id = '".$CampId."'");
 // 1. Count
 $success_donate = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = '".$CampId."' AND Fit = '1'");
 $failure_donate = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = '".$CampId."' AND Fit = '0'");
+$total_donate = $success_donate + $failure_donate;
 
 // 2. Blood Group Distribution
-$bldgrp_results = DB::query("SELECT BloodGroup, COUNT(*) as Count FROM donor WHERE CampId = '".$CampId."' GROUP BY BloodGroup ORDER BY Count DESC");
+$bldgrp_results = DB::query("SELECT BloodGroup, COUNT(*) as Count FROM donor WHERE CampId = '".$CampId."' AND Fit = '1' GROUP BY BloodGroup ORDER BY Count DESC");
 $BldGrpData = "";
 foreach ($bldgrp_results as $row) {
     $BldGrpData .= "['". $row['BloodGroup'] ."', ". $row['Count'] ."], ";
@@ -27,7 +30,7 @@ $males = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = '".$Camp
 $females = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = '".$CampId."' AND Fit = '1' AND Gender = 'F'");
 
 // 5. Hall Distribution
-$hall_results = DB::query("SELECT Hostel, COUNT(*) as Count FROM donor WHERE CampId = '".$CampId."' GROUP BY Hostel ORDER BY Count DESC LIMIT 3");
+$hall_results = DB::query("SELECT Hostel, COUNT(*) as Count FROM donor WHERE CampId = '".$CampId."' AND Fit = '1' GROUP BY Hostel ORDER BY Count DESC LIMIT 5");
 $HallTable = "<table class='table_lines'>\n<tr>\n<th>Rank</th><th>Hostel</th><th>Donations</th>\n</tr>\n";
 $Rank = 0;
 foreach ($hall_results as $row) {
@@ -44,7 +47,7 @@ $HallTable .= "</table>";
 <html>
 <head>
 <title>&bull; Raktarpan &bull; Blood Donation Camp &bull; Live Statistics &bull;</title>
-<link href="live.css" rel='stylesheet' type='text/css' />
+<link href="<? echo $CampDir; ?>/css/live.css" rel='stylesheet' type='text/css' />
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -66,10 +69,10 @@ $HallTable .= "</table>";
           is3D: true,
           pieSliceText: 'label',
           pieStartAngle: 50,
-          slices: {  5: {offset: 0.1},
-                    6: {offset: 0.2},
-                    7: {offset: 0.2},
-                    8: {offset: 0.2},
+          slices: {  5: {offset: 0.2},
+                    6: {offset: 0.3},
+                    7: {offset: 0.4},
+                    8: {offset: 0.5},
                     },
         };
 
@@ -77,25 +80,26 @@ $HallTable .= "</table>";
         chart.draw(data, options);
       }
     </script>
+     <!-- meta http-equiv="refresh" content="30" /-->
 </head>
 <body>
     <header>
-      <center><img src="../rakt.png" class="header_image"></center>
+    <center><img src="<? echo $CampDir; ?>/images/rakt.png" class="header_image"></center>
     </header>
 
     <div id="content">
 
       <table>
         <tr>
-          <td><img src="man.png"><span id="stat-gender"> <? echo $males;?></span></td>
-          <td width="40%"><center><!-- h2>Successful Donations</center></h2 -->
+          <td><img src="<? echo $CampDir; ?>/images/man.png"><span id="stat-gender"> <? echo $males;?></span></td>
+          <td width="40%"><center><h2>Complete</h2></center>
               <div id="total"> 
                 <? echo $success_donate; ?>
               </div><br>
               <center style="font-size: 24px">
-                <!-- Total: --><b><? echo $success_donate+$failure_donate; ?></b>
+                <b><big>out of <? echo $total_donate; ?></big></b>
               </center></td>
-          <td><img src="woman.png"><span id="stat-gender"> <? echo $females;?></span></td>
+          <td><img src="<? echo $CampDir; ?>/images/woman.png"><span id="stat-gender"> <? echo $females;?></span></td>
       </tr>
     </table>
 
