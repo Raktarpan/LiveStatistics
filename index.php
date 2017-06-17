@@ -6,31 +6,31 @@ require_once($CampDir . '/config.php');
 require_once($CampDir . '/settings.php');
 
 // Gather Camp Details
-DB::query("SELECT * FROM camp WHERE Id = '".$CampId."'");
+DB::query("SELECT * FROM camp WHERE Id = %i", $CampId);
 
 // Gather Donation Details
 
 // 1. Count
-$success_donate = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = '".$CampId."' AND Fit = '1'");
-$failure_donate = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = '".$CampId."' AND Fit = '0'");
+$success_donate = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = %i AND Fit = '1'", $CampId);
+$failure_donate = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = %i AND Fit = '0'", $CampId);
 $total_donate = $success_donate + $failure_donate;
 
 // 2. Blood Group Distribution
-$bldgrp_results = DB::query("SELECT BloodGroup, COUNT(*) as Count FROM donor WHERE CampId = '".$CampId."' AND Fit = '1' GROUP BY BloodGroup ORDER BY Count DESC");
+$bldgrp_results = DB::query("SELECT BloodGroup, COUNT(*) as Count FROM donor WHERE CampId = %i AND Fit = '1' GROUP BY BloodGroup ORDER BY Count DESC", $CampId);
 $BldGrpData = "";
 foreach ($bldgrp_results as $row) {
     $BldGrpData .= "['". $row['BloodGroup'] ."', ". $row['Count'] ."], ";
 }
 
 // 3. Year-Wise Distribution
-// $year_results = DB::query("SELECT COUNT(*) FROM donor WHERE Id = '".$CampId."' GROUP BY _________");
+// $year_results = DB::query("SELECT COUNT(*) FROM donor WHERE Id = %i GROUP BY _________", $CampId);
 
 // 4. Gender Distribution
-$males = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = '".$CampId."' AND Fit = '1' AND Gender = 'M'");
-$females = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = '".$CampId."' AND Fit = '1' AND Gender = 'F'");
+$males = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = %i AND Fit = '1' AND Gender = 'M'", $CampId);
+$females = DB::queryFirstField("SELECT COUNT(*) FROM donor WHERE CampId = %i AND Fit = '1' AND Gender = 'F'", $CampId);
 
 // 5. Hall Distribution
-$hall_results = DB::query("SELECT Hostel, COUNT(*) as Count FROM donor WHERE CampId = '".$CampId."' AND Fit = '1' GROUP BY Hostel ORDER BY Count DESC LIMIT 5");
+$hall_results = DB::query("SELECT Hostel, COUNT(*) as Count FROM donor WHERE CampId = %i AND Fit = '1' GROUP BY Hostel ORDER BY Count DESC LIMIT 5", $CampId);
 $HallTable = "<table class='table_lines'>\n<tr>\n<th>Rank</th><th>Hostel</th><th>Donations</th>\n</tr>\n";
 $Rank = 0;
 foreach ($hall_results as $row) {

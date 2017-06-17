@@ -1,10 +1,7 @@
 <?php
 
-/*
- *  Camp Settings
- */
+/* Camp Settings */
 
 $CampId = 1;
-
 
 ?>
