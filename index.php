@@ -47,7 +47,7 @@ $HallTable .= "</table>";
 <html>
 <head>
 <title>&bull; Raktarpan &bull; Blood Donation Camp &bull; Live Statistics &bull;</title>
-<link href="<? echo $CampDir; ?>/css/live.css" rel='stylesheet' type='text/css' />
+<link href="<?php echo $CampDir; ?>/css/live.css" rel='stylesheet' type='text/css' />
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -84,33 +84,33 @@ $HallTable .= "</table>";
 </head>
 <body>
     <header>
-    <center><img src="<? echo $CampDir; ?>/images/rakt.png" class="header_image"></center>
+    <center><img src="<?php echo $CampDir; ?>/images/rakt.png" class="header_image"></center>
     </header>
 
     <div id="content">
 
       <table>
         <tr>
-          <td><img src="<? echo $CampDir; ?>/images/man.png"><span id="stat-gender"> <? echo $males;?></span></td>
+          <td><img src="<?php echo $CampDir; ?>/images/man.png"><span id="stat-gender"> <? echo $males;?></span></td>
           <td width="40%"><center><h2>Complete</h2></center>
               <div id="total"> 
-                <? echo $success_donate; ?>
+                <?php echo $success_donate; ?>
               </div><br>
               <center style="font-size: 24px">
-                <b><big>out of <? echo $total_donate; ?></big></b>
+                <b><big>out of <?php echo $total_donate; ?></big></b>
               </center></td>
-          <td><img src="<? echo $CampDir; ?>/images/woman.png"><span id="stat-gender"> <? echo $females;?></span></td>
+          <td><img src="<?php echo $CampDir; ?>/images/woman.png"><span id="stat-gender"> <? echo $females;?></span></td>
       </tr>
     </table>
 
       <!-- <div id="stat-gender">
           <table>
             <tr>
-              <td><img src="man.png">: <? echo $males;?></td>
-              <td><img src="woman.png">: <? echo $females;?></td>
+              <td><img src="man.png">: <?php echo $males;?></td>
+              <td><img src="woman.png">: <?php echo $females;?></td>
             </tr>
           </table>
-          <small><? //echo "&bull; <b>Male</b>: " . $males . "<br> &bull; <b>Female</b>: " . $females; ?></small>
+          <small><?php //echo "&bull; <b>Male</b>: " . $males . "<br> &bull; <b>Female</b>: " . $females; ?></small>
         </div> -->
 
       <div id="stats">
@@ -120,7 +120,7 @@ $HallTable .= "</table>";
         <!-- <div id="stat-year" class="stats"></div> -->
 
         <div id="stat-hall" class="stats">
-            <? echo $HallTable; ?>
+            <?php echo $HallTable; ?>
         </div>
 
       </div>
